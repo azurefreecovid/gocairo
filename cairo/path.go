@@ -24,7 +24,7 @@ type PathSegment struct {
 
 // PathPoints are produced by iterating paths.
 type PathPoint struct {
-	X, Y float64
+	X, Y float32
 }
 
 // Matches cairo_path_data_t.header.

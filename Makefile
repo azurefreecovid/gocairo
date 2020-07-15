@@ -1,7 +1,7 @@
 .PHONY: all cairo example
 
 cairo: cairo/cairo.go cairo/*.go
-	go install github.com/martine/gocairo/cairo
+	go install github.com/azurefreecovid/gocairo/cairo
 
 all: cairo example
 

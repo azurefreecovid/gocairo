@@ -236,12 +236,12 @@ func BorrowDevice(p unsafe.Pointer) *Device {
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-matrix-t.html#cairo-matrix-t
 type Matrix struct {
-	Xx float64
-	Yx float64
-	Xy float64
-	Yy float64
-	X0 float64
-	Y0 float64
+	Xx float32
+	Yx float32
+	Xy float32
+	Yy float32
+	X0 float32
+	Y0 float32
 }
 
 // See cairo_pattern_t.
@@ -578,7 +578,7 @@ func (cr *Context) SetSource(source *Pattern) {
 // See cairo_set_source_rgb().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-set-source-rgb
-func (cr *Context) SetSourceRGB(red, green, blue float64) {
+func (cr *Context) SetSourceRGB(red, green, blue float32) {
 	C.cairo_set_source_rgb(cr.Ptr, C.double(red), C.double(green), C.double(blue))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -588,7 +588,7 @@ func (cr *Context) SetSourceRGB(red, green, blue float64) {
 // See cairo_set_source_rgba().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-set-source-rgba
-func (cr *Context) SetSourceRGBA(red, green, blue, alpha float64) {
+func (cr *Context) SetSourceRGBA(red, green, blue, alpha float32) {
 	C.cairo_set_source_rgba(cr.Ptr, C.double(red), C.double(green), C.double(blue), C.double(alpha))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -598,7 +598,7 @@ func (cr *Context) SetSourceRGBA(red, green, blue, alpha float64) {
 // See cairo_set_source_surface().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-set-source-surface
-func (cr *Context) SetSourceSurface(surface *Surface, x, y float64) {
+func (cr *Context) SetSourceSurface(surface *Surface, x, y float32) {
 	C.cairo_set_source_surface(cr.Ptr, surface.Ptr, C.double(x), C.double(y))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -608,7 +608,7 @@ func (cr *Context) SetSourceSurface(surface *Surface, x, y float64) {
 // See cairo_set_tolerance().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-set-tolerance
-func (cr *Context) SetTolerance(tolerance float64) {
+func (cr *Context) SetTolerance(tolerance float32) {
 	C.cairo_set_tolerance(cr.Ptr, C.double(tolerance))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -697,7 +697,7 @@ func (cr *Context) SetFillRule(fillRule FillRule) {
 // See cairo_set_line_width().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-width
-func (cr *Context) SetLineWidth(width float64) {
+func (cr *Context) SetLineWidth(width float32) {
 	C.cairo_set_line_width(cr.Ptr, C.double(width))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -777,7 +777,7 @@ func (cr *Context) SetLineJoin(lineJoin LineJoin) {
 // See cairo_set_dash().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash
-func (cr *Context) SetDash(dashes []float64, offset float64) {
+func (cr *Context) SetDash(dashes []float32, offset float32) {
 	C.cairo_set_dash(cr.Ptr, (*C.double)(sliceBytes(unsafe.Pointer(&dashes))), C.int(len(dashes)), C.double(offset))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -787,7 +787,7 @@ func (cr *Context) SetDash(dashes []float64, offset float64) {
 // See cairo_set_miter_limit().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-set-miter-limit
-func (cr *Context) SetMiterLimit(limit float64) {
+func (cr *Context) SetMiterLimit(limit float32) {
 	C.cairo_set_miter_limit(cr.Ptr, C.double(limit))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -797,7 +797,7 @@ func (cr *Context) SetMiterLimit(limit float64) {
 // See cairo_translate().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Transformations.html#cairo-translate
-func (cr *Context) Translate(tx, ty float64) {
+func (cr *Context) Translate(tx, ty float32) {
 	C.cairo_translate(cr.Ptr, C.double(tx), C.double(ty))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -807,7 +807,7 @@ func (cr *Context) Translate(tx, ty float64) {
 // See cairo_scale().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Transformations.html#cairo-scale
-func (cr *Context) Scale(sx, sy float64) {
+func (cr *Context) Scale(sx, sy float32) {
 	C.cairo_scale(cr.Ptr, C.double(sx), C.double(sy))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -817,7 +817,7 @@ func (cr *Context) Scale(sx, sy float64) {
 // See cairo_rotate().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Transformations.html#cairo-rotate
-func (cr *Context) Rotate(angle float64) {
+func (cr *Context) Rotate(angle float32) {
 	C.cairo_rotate(cr.Ptr, C.double(angle))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -857,7 +857,7 @@ func (cr *Context) IdentityMatrix() {
 // See cairo_user_to_device().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Transformations.html#cairo-user-to-device
-func (cr *Context) UserToDevice(x, y *float64) {
+func (cr *Context) UserToDevice(x, y *float32) {
 	C.cairo_user_to_device(cr.Ptr, (*C.double)(unsafe.Pointer(x)), (*C.double)(unsafe.Pointer(y)))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -867,7 +867,7 @@ func (cr *Context) UserToDevice(x, y *float64) {
 // See cairo_user_to_device_distance().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Transformations.html#cairo-user-to-device-distance
-func (cr *Context) UserToDeviceDistance(dx, dy *float64) {
+func (cr *Context) UserToDeviceDistance(dx, dy *float32) {
 	C.cairo_user_to_device_distance(cr.Ptr, (*C.double)(unsafe.Pointer(dx)), (*C.double)(unsafe.Pointer(dy)))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -877,7 +877,7 @@ func (cr *Context) UserToDeviceDistance(dx, dy *float64) {
 // See cairo_device_to_user().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Transformations.html#cairo-device-to-user
-func (cr *Context) DeviceToUser(x, y *float64) {
+func (cr *Context) DeviceToUser(x, y *float32) {
 	C.cairo_device_to_user(cr.Ptr, (*C.double)(unsafe.Pointer(x)), (*C.double)(unsafe.Pointer(y)))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -887,7 +887,7 @@ func (cr *Context) DeviceToUser(x, y *float64) {
 // See cairo_device_to_user_distance().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Transformations.html#cairo-device-to-user-distance
-func (cr *Context) DeviceToUserDistance(dx, dy *float64) {
+func (cr *Context) DeviceToUserDistance(dx, dy *float32) {
 	C.cairo_device_to_user_distance(cr.Ptr, (*C.double)(unsafe.Pointer(dx)), (*C.double)(unsafe.Pointer(dy)))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -907,7 +907,7 @@ func (cr *Context) NewPath() {
 // See cairo_move_to().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Paths.html#cairo-move-to
-func (cr *Context) MoveTo(x, y float64) {
+func (cr *Context) MoveTo(x, y float32) {
 	C.cairo_move_to(cr.Ptr, C.double(x), C.double(y))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -927,7 +927,7 @@ func (cr *Context) NewSubPath() {
 // See cairo_line_to().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Paths.html#cairo-line-to
-func (cr *Context) LineTo(x, y float64) {
+func (cr *Context) LineTo(x, y float32) {
 	C.cairo_line_to(cr.Ptr, C.double(x), C.double(y))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -937,7 +937,7 @@ func (cr *Context) LineTo(x, y float64) {
 // See cairo_curve_to().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Paths.html#cairo-curve-to
-func (cr *Context) CurveTo(x1, y1, x2, y2, x3, y3 float64) {
+func (cr *Context) CurveTo(x1, y1, x2, y2, x3, y3 float32) {
 	C.cairo_curve_to(cr.Ptr, C.double(x1), C.double(y1), C.double(x2), C.double(y2), C.double(x3), C.double(y3))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -947,7 +947,7 @@ func (cr *Context) CurveTo(x1, y1, x2, y2, x3, y3 float64) {
 // See cairo_arc().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Paths.html#cairo-arc
-func (cr *Context) Arc(xc, yc, radius, angle1, angle2 float64) {
+func (cr *Context) Arc(xc, yc, radius, angle1, angle2 float32) {
 	C.cairo_arc(cr.Ptr, C.double(xc), C.double(yc), C.double(radius), C.double(angle1), C.double(angle2))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -957,7 +957,7 @@ func (cr *Context) Arc(xc, yc, radius, angle1, angle2 float64) {
 // See cairo_arc_negative().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Paths.html#cairo-arc-negative
-func (cr *Context) ArcNegative(xc, yc, radius, angle1, angle2 float64) {
+func (cr *Context) ArcNegative(xc, yc, radius, angle1, angle2 float32) {
 	C.cairo_arc_negative(cr.Ptr, C.double(xc), C.double(yc), C.double(radius), C.double(angle1), C.double(angle2))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -967,7 +967,7 @@ func (cr *Context) ArcNegative(xc, yc, radius, angle1, angle2 float64) {
 // See cairo_rel_move_to().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Paths.html#cairo-rel-move-to
-func (cr *Context) RelMoveTo(dx, dy float64) {
+func (cr *Context) RelMoveTo(dx, dy float32) {
 	C.cairo_rel_move_to(cr.Ptr, C.double(dx), C.double(dy))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -977,7 +977,7 @@ func (cr *Context) RelMoveTo(dx, dy float64) {
 // See cairo_rel_line_to().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Paths.html#cairo-rel-line-to
-func (cr *Context) RelLineTo(dx, dy float64) {
+func (cr *Context) RelLineTo(dx, dy float32) {
 	C.cairo_rel_line_to(cr.Ptr, C.double(dx), C.double(dy))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -987,7 +987,7 @@ func (cr *Context) RelLineTo(dx, dy float64) {
 // See cairo_rel_curve_to().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Paths.html#cairo-rel-curve-to
-func (cr *Context) RelCurveTo(dx1, dy1, dx2, dy2, dx3, dy3 float64) {
+func (cr *Context) RelCurveTo(dx1, dy1, dx2, dy2, dx3, dy3 float32) {
 	C.cairo_rel_curve_to(cr.Ptr, C.double(dx1), C.double(dy1), C.double(dx2), C.double(dy2), C.double(dx3), C.double(dy3))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -997,7 +997,7 @@ func (cr *Context) RelCurveTo(dx1, dy1, dx2, dy2, dx3, dy3 float64) {
 // See cairo_rectangle().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Paths.html#cairo-rectangle
-func (cr *Context) Rectangle(x, y, width, height float64) {
+func (cr *Context) Rectangle(x, y, width, height float32) {
 	C.cairo_rectangle(cr.Ptr, C.double(x), C.double(y), C.double(width), C.double(height))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -1017,7 +1017,7 @@ func (cr *Context) ClosePath() {
 // See cairo_path_extents().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Paths.html#cairo-path-extents
-func (cr *Context) PathExtents() (float64, float64, float64, float64) {
+func (cr *Context) PathExtents() (float32, float32, float32, float32) {
 	var x1 C.double
 	var y1 C.double
 	var x2 C.double
@@ -1027,7 +1027,7 @@ func (cr *Context) PathExtents() (float64, float64, float64, float64) {
 	if err := cr.status(); err != nil {
 		panic(err)
 	}
-	return float64(x1), float64(y1), float64(x2), float64(y2)
+	return float32(x1), float32(y1), float32(x2), float32(y2)
 }
 
 // See cairo_paint().
@@ -1043,7 +1043,7 @@ func (cr *Context) Paint() {
 // See cairo_paint_with_alpha().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-paint-with-alpha
-func (cr *Context) PaintWithAlpha(alpha float64) {
+func (cr *Context) PaintWithAlpha(alpha float32) {
 	C.cairo_paint_with_alpha(cr.Ptr, C.double(alpha))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -1063,7 +1063,7 @@ func (cr *Context) Mask(pattern *Pattern) {
 // See cairo_mask_surface().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-mask-surface
-func (cr *Context) MaskSurface(surface *Surface, surfaceX, surfaceY float64) {
+func (cr *Context) MaskSurface(surface *Surface, surfaceX, surfaceY float32) {
 	C.cairo_mask_surface(cr.Ptr, surface.Ptr, C.double(surfaceX), C.double(surfaceY))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -1133,7 +1133,7 @@ func (cr *Context) ShowPage() {
 // See cairo_in_stroke().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-in-stroke
-func (cr *Context) InStroke(x, y float64) bool {
+func (cr *Context) InStroke(x, y float32) bool {
 	ret := C.cairo_in_stroke(cr.Ptr, C.double(x), C.double(y)) != 0
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -1144,7 +1144,7 @@ func (cr *Context) InStroke(x, y float64) bool {
 // See cairo_in_fill().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-in-fill
-func (cr *Context) InFill(x, y float64) bool {
+func (cr *Context) InFill(x, y float32) bool {
 	ret := C.cairo_in_fill(cr.Ptr, C.double(x), C.double(y)) != 0
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -1155,7 +1155,7 @@ func (cr *Context) InFill(x, y float64) bool {
 // See cairo_in_clip().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-in-clip
-func (cr *Context) InClip(x, y float64) bool {
+func (cr *Context) InClip(x, y float32) bool {
 	ret := C.cairo_in_clip(cr.Ptr, C.double(x), C.double(y)) != 0
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -1166,7 +1166,7 @@ func (cr *Context) InClip(x, y float64) bool {
 // See cairo_stroke_extents().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-stroke-extents
-func (cr *Context) StrokeExtents() (float64, float64, float64, float64) {
+func (cr *Context) StrokeExtents() (float32, float32, float32, float32) {
 	var x1 C.double
 	var y1 C.double
 	var x2 C.double
@@ -1176,13 +1176,13 @@ func (cr *Context) StrokeExtents() (float64, float64, float64, float64) {
 	if err := cr.status(); err != nil {
 		panic(err)
 	}
-	return float64(x1), float64(y1), float64(x2), float64(y2)
+	return float32(x1), float32(y1), float32(x2), float32(y2)
 }
 
 // See cairo_fill_extents().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-fill-extents
-func (cr *Context) FillExtents() (float64, float64, float64, float64) {
+func (cr *Context) FillExtents() (float32, float32, float32, float32) {
 	var x1 C.double
 	var y1 C.double
 	var x2 C.double
@@ -1192,7 +1192,7 @@ func (cr *Context) FillExtents() (float64, float64, float64, float64) {
 	if err := cr.status(); err != nil {
 		panic(err)
 	}
-	return float64(x1), float64(y1), float64(x2), float64(y2)
+	return float32(x1), float32(y1), float32(x2), float32(y2)
 }
 
 // See cairo_reset_clip().
@@ -1228,7 +1228,7 @@ func (cr *Context) ClipPreserve() {
 // See cairo_clip_extents().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-clip-extents
-func (cr *Context) ClipExtents() (float64, float64, float64, float64) {
+func (cr *Context) ClipExtents() (float32, float32, float32, float32) {
 	var x1 C.double
 	var y1 C.double
 	var x2 C.double
@@ -1238,17 +1238,17 @@ func (cr *Context) ClipExtents() (float64, float64, float64, float64) {
 	if err := cr.status(); err != nil {
 		panic(err)
 	}
-	return float64(x1), float64(y1), float64(x2), float64(y2)
+	return float32(x1), float32(y1), float32(x2), float32(y2)
 }
 
 // See cairo_rectangle_t.
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-rectangle-t
 type Rectangle struct {
-	X      float64
-	Y      float64
-	Width  float64
-	Height float64
+	X      float32
+	Y      float32
+	Width  float32
+	Height float32
 }
 
 // See cairo_scaled_font_t.
@@ -1308,8 +1308,8 @@ func BorrowFontFace(p unsafe.Pointer) *FontFace {
 // C API documentation: http://cairographics.org/manual/cairo-text.html#cairo-glyph-t
 type Glyph struct {
 	Index uint32
-	X     float64
-	Y     float64
+	X     float32
+	Y     float32
 }
 
 // See cairo_text_cluster_flags_t.
@@ -1335,23 +1335,23 @@ func (i TextClusterFlags) String() string {
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-scaled-font-t.html#cairo-text-extents-t
 type TextExtents struct {
-	XBearing float64
-	YBearing float64
-	Width    float64
-	Height   float64
-	XAdvance float64
-	YAdvance float64
+	XBearing float32
+	YBearing float32
+	Width    float32
+	Height   float32
+	XAdvance float32
+	YAdvance float32
 }
 
 // See cairo_font_extents_t.
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-scaled-font-t.html#cairo-font-extents-t
 type FontExtents struct {
-	Ascent      float64
-	Descent     float64
-	Height      float64
-	MaxXAdvance float64
-	MaxYAdvance float64
+	Ascent      float32
+	Descent     float32
+	Height      float32
+	MaxXAdvance float32
+	MaxYAdvance float32
 }
 
 // See cairo_font_slant_t.
@@ -1675,7 +1675,7 @@ func (cr *Context) SelectFontFace(family string, slant FontSlant, weight FontWei
 // See cairo_set_font_size().
 //
 // C API documentation: http://cairographics.org/manual/cairo-text.html#cairo-set-font-size
-func (cr *Context) SetFontSize(size float64) {
+func (cr *Context) SetFontSize(size float32) {
 	C.cairo_set_font_size(cr.Ptr, C.double(size))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -2085,8 +2085,8 @@ func (cr *Context) GetSource() *Pattern {
 // See cairo_get_tolerance().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-get-tolerance
-func (cr *Context) GetTolerance() float64 {
-	ret := float64(C.cairo_get_tolerance(cr.Ptr))
+func (cr *Context) GetTolerance() float32 {
+	ret := float32(C.cairo_get_tolerance(cr.Ptr))
 	if err := cr.status(); err != nil {
 		panic(err)
 	}
@@ -2118,7 +2118,7 @@ func (cr *Context) HasCurrentPoint() bool {
 // See cairo_get_current_point().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Paths.html#cairo-get-current-point
-func (cr *Context) GetCurrentPoint() (float64, float64) {
+func (cr *Context) GetCurrentPoint() (float32, float32) {
 	var x C.double
 	var y C.double
 
@@ -2126,7 +2126,7 @@ func (cr *Context) GetCurrentPoint() (float64, float64) {
 	if err := cr.status(); err != nil {
 		panic(err)
 	}
-	return float64(x), float64(y)
+	return float32(x), float32(y)
 }
 
 // See cairo_get_fill_rule().
@@ -2143,8 +2143,8 @@ func (cr *Context) GetFillRule() FillRule {
 // See cairo_get_line_width().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-get-line-width
-func (cr *Context) GetLineWidth() float64 {
-	ret := float64(C.cairo_get_line_width(cr.Ptr))
+func (cr *Context) GetLineWidth() float32 {
+	ret := float32(C.cairo_get_line_width(cr.Ptr))
 	if err := cr.status(); err != nil {
 		panic(err)
 	}
@@ -2176,8 +2176,8 @@ func (cr *Context) GetLineJoin() LineJoin {
 // See cairo_get_miter_limit().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-get-miter-limit
-func (cr *Context) GetMiterLimit() float64 {
-	ret := float64(C.cairo_get_miter_limit(cr.Ptr))
+func (cr *Context) GetMiterLimit() float32 {
+	ret := float32(C.cairo_get_miter_limit(cr.Ptr))
 	if err := cr.status(); err != nil {
 		panic(err)
 	}
@@ -2198,7 +2198,7 @@ func (cr *Context) GetDashCount() int {
 // See cairo_get_dash().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-t.html#cairo-get-dash
-func (cr *Context) GetDash(dashes, offset *float64) {
+func (cr *Context) GetDash(dashes, offset *float32) {
 	C.cairo_get_dash(cr.Ptr, (*C.double)(unsafe.Pointer(dashes)), (*C.double)(unsafe.Pointer(offset)))
 	if err := cr.status(); err != nil {
 		panic(err)
@@ -2469,7 +2469,7 @@ func (surface *Surface) UnmapImage(image *Surface) {
 // See cairo_surface_create_for_rectangle().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-surface-t.html#cairo-surface-create-for-rectangle
-func (target *Surface) CreateForRectangle(x, y, width, height float64) *Surface {
+func (target *Surface) CreateForRectangle(x, y, width, height float32) *Surface {
 	ret := wrapSurface(C.cairo_surface_create_for_rectangle(target.Ptr, C.double(x), C.double(y), C.double(width), C.double(height)))
 	if err := target.status(); err != nil {
 		panic(err)
@@ -2507,8 +2507,8 @@ func (target *Surface) CreateObserver(mode SurfaceObserverMode) *SurfaceObserver
 }
 
 // See cairo_surface_observer_elapsed().
-func (surface *SurfaceObserver) Elapsed() float64 {
-	ret := float64(C.cairo_surface_observer_elapsed(surface.Ptr))
+func (surface *SurfaceObserver) Elapsed() float32 {
+	ret := float32(C.cairo_surface_observer_elapsed(surface.Ptr))
 	if err := surface.status(); err != nil {
 		panic(err)
 	}
@@ -2518,8 +2518,8 @@ func (surface *SurfaceObserver) Elapsed() float64 {
 // See cairo_device_observer_elapsed().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-device-t.html#cairo-device-observer-elapsed
-func (device *Device) ObserverElapsed() float64 {
-	ret := float64(C.cairo_device_observer_elapsed(device.Ptr))
+func (device *Device) ObserverElapsed() float32 {
+	ret := float32(C.cairo_device_observer_elapsed(device.Ptr))
 	if err := device.status(); err != nil {
 		panic(err)
 	}
@@ -2529,8 +2529,8 @@ func (device *Device) ObserverElapsed() float64 {
 // See cairo_device_observer_paint_elapsed().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-device-t.html#cairo-device-observer-paint-elapsed
-func (device *Device) ObserverPaintElapsed() float64 {
-	ret := float64(C.cairo_device_observer_paint_elapsed(device.Ptr))
+func (device *Device) ObserverPaintElapsed() float32 {
+	ret := float32(C.cairo_device_observer_paint_elapsed(device.Ptr))
 	if err := device.status(); err != nil {
 		panic(err)
 	}
@@ -2540,8 +2540,8 @@ func (device *Device) ObserverPaintElapsed() float64 {
 // See cairo_device_observer_mask_elapsed().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-device-t.html#cairo-device-observer-mask-elapsed
-func (device *Device) ObserverMaskElapsed() float64 {
-	ret := float64(C.cairo_device_observer_mask_elapsed(device.Ptr))
+func (device *Device) ObserverMaskElapsed() float32 {
+	ret := float32(C.cairo_device_observer_mask_elapsed(device.Ptr))
 	if err := device.status(); err != nil {
 		panic(err)
 	}
@@ -2551,8 +2551,8 @@ func (device *Device) ObserverMaskElapsed() float64 {
 // See cairo_device_observer_fill_elapsed().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-device-t.html#cairo-device-observer-fill-elapsed
-func (device *Device) ObserverFillElapsed() float64 {
-	ret := float64(C.cairo_device_observer_fill_elapsed(device.Ptr))
+func (device *Device) ObserverFillElapsed() float32 {
+	ret := float32(C.cairo_device_observer_fill_elapsed(device.Ptr))
 	if err := device.status(); err != nil {
 		panic(err)
 	}
@@ -2562,8 +2562,8 @@ func (device *Device) ObserverFillElapsed() float64 {
 // See cairo_device_observer_stroke_elapsed().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-device-t.html#cairo-device-observer-stroke-elapsed
-func (device *Device) ObserverStrokeElapsed() float64 {
-	ret := float64(C.cairo_device_observer_stroke_elapsed(device.Ptr))
+func (device *Device) ObserverStrokeElapsed() float32 {
+	ret := float32(C.cairo_device_observer_stroke_elapsed(device.Ptr))
 	if err := device.status(); err != nil {
 		panic(err)
 	}
@@ -2573,8 +2573,8 @@ func (device *Device) ObserverStrokeElapsed() float64 {
 // See cairo_device_observer_glyphs_elapsed().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-device-t.html#cairo-device-observer-glyphs-elapsed
-func (device *Device) ObserverGlyphsElapsed() float64 {
-	ret := float64(C.cairo_device_observer_glyphs_elapsed(device.Ptr))
+func (device *Device) ObserverGlyphsElapsed() float32 {
+	ret := float32(C.cairo_device_observer_glyphs_elapsed(device.Ptr))
 	if err := device.status(); err != nil {
 		panic(err)
 	}
@@ -2779,7 +2779,7 @@ func (surface *Surface) MarkDirtyRectangle(x, y, width, height int) {
 // See cairo_surface_set_device_scale().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-surface-t.html#cairo-surface-set-device-scale
-func (surface *Surface) SetDeviceScale(xScale, yScale float64) {
+func (surface *Surface) SetDeviceScale(xScale, yScale float32) {
 	C.cairo_surface_set_device_scale(surface.Ptr, C.double(xScale), C.double(yScale))
 	if err := surface.status(); err != nil {
 		panic(err)
@@ -2789,7 +2789,7 @@ func (surface *Surface) SetDeviceScale(xScale, yScale float64) {
 // See cairo_surface_get_device_scale().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-surface-t.html#cairo-surface-get-device-scale
-func (surface *Surface) GetDeviceScale() (float64, float64) {
+func (surface *Surface) GetDeviceScale() (float32, float32) {
 	var xScale C.double
 	var yScale C.double
 
@@ -2797,13 +2797,13 @@ func (surface *Surface) GetDeviceScale() (float64, float64) {
 	if err := surface.status(); err != nil {
 		panic(err)
 	}
-	return float64(xScale), float64(yScale)
+	return float32(xScale), float32(yScale)
 }
 
 // See cairo_surface_set_device_offset().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-surface-t.html#cairo-surface-set-device-offset
-func (surface *Surface) SetDeviceOffset(xOffset, yOffset float64) {
+func (surface *Surface) SetDeviceOffset(xOffset, yOffset float32) {
 	C.cairo_surface_set_device_offset(surface.Ptr, C.double(xOffset), C.double(yOffset))
 	if err := surface.status(); err != nil {
 		panic(err)
@@ -2813,7 +2813,7 @@ func (surface *Surface) SetDeviceOffset(xOffset, yOffset float64) {
 // See cairo_surface_get_device_offset().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-surface-t.html#cairo-surface-get-device-offset
-func (surface *Surface) GetDeviceOffset() (float64, float64) {
+func (surface *Surface) GetDeviceOffset() (float32, float32) {
 	var xOffset C.double
 	var yOffset C.double
 
@@ -2821,13 +2821,13 @@ func (surface *Surface) GetDeviceOffset() (float64, float64) {
 	if err := surface.status(); err != nil {
 		panic(err)
 	}
-	return float64(xOffset), float64(yOffset)
+	return float32(xOffset), float32(yOffset)
 }
 
 // See cairo_surface_set_fallback_resolution().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-surface-t.html#cairo-surface-set-fallback-resolution
-func (surface *Surface) SetFallbackResolution(xPixelsPerInch, yPixelsPerInch float64) {
+func (surface *Surface) SetFallbackResolution(xPixelsPerInch, yPixelsPerInch float32) {
 	C.cairo_surface_set_fallback_resolution(surface.Ptr, C.double(xPixelsPerInch), C.double(yPixelsPerInch))
 	if err := surface.status(); err != nil {
 		panic(err)
@@ -2837,7 +2837,7 @@ func (surface *Surface) SetFallbackResolution(xPixelsPerInch, yPixelsPerInch flo
 // See cairo_surface_get_fallback_resolution().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-surface-t.html#cairo-surface-get-fallback-resolution
-func (surface *Surface) GetFallbackResolution() (float64, float64) {
+func (surface *Surface) GetFallbackResolution() (float32, float32) {
 	var xPixelsPerInch C.double
 	var yPixelsPerInch C.double
 
@@ -2845,7 +2845,7 @@ func (surface *Surface) GetFallbackResolution() (float64, float64) {
 	if err := surface.status(); err != nil {
 		panic(err)
 	}
-	return float64(xPixelsPerInch), float64(yPixelsPerInch)
+	return float32(xPixelsPerInch), float32(yPixelsPerInch)
 }
 
 // See cairo_surface_copy_page().
@@ -2964,7 +2964,7 @@ func RecordingSurfaceCreate(content Content, extents *Rectangle) *RecordingSurfa
 // See cairo_recording_surface_ink_extents().
 //
 // C API documentation: http://cairographics.org/manual/cairo-Recording-Surfaces.html#cairo-recording-surface-ink-extents
-func (surface *RecordingSurface) InkExtents() (float64, float64, float64, float64) {
+func (surface *RecordingSurface) InkExtents() (float32, float32, float32, float32) {
 	var x0 C.double
 	var y0 C.double
 	var width C.double
@@ -2974,7 +2974,7 @@ func (surface *RecordingSurface) InkExtents() (float64, float64, float64, float6
 	if err := surface.status(); err != nil {
 		panic(err)
 	}
-	return float64(x0), float64(y0), float64(width), float64(height)
+	return float32(x0), float32(y0), float32(width), float32(height)
 }
 
 // See cairo_recording_surface_get_extents().
@@ -2991,7 +2991,7 @@ func (surface *RecordingSurface) GetExtents(extents *Rectangle) bool {
 // See cairo_pattern_create_rgb().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-pattern-create-rgb
-func PatternCreateRGB(red, green, blue float64) *Pattern {
+func PatternCreateRGB(red, green, blue float32) *Pattern {
 	ret := wrapPattern(C.cairo_pattern_create_rgb(C.double(red), C.double(green), C.double(blue)))
 	if err := ret.status(); err != nil {
 		panic(err)
@@ -3002,7 +3002,7 @@ func PatternCreateRGB(red, green, blue float64) *Pattern {
 // See cairo_pattern_create_rgba().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-pattern-create-rgba
-func PatternCreateRGBA(red, green, blue, alpha float64) *Pattern {
+func PatternCreateRGBA(red, green, blue, alpha float32) *Pattern {
 	ret := wrapPattern(C.cairo_pattern_create_rgba(C.double(red), C.double(green), C.double(blue), C.double(alpha)))
 	if err := ret.status(); err != nil {
 		panic(err)
@@ -3024,7 +3024,7 @@ func PatternCreateForSurface(surface *Surface) *Pattern {
 // See cairo_pattern_create_linear().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-pattern-create-linear
-func PatternCreateLinear(x0, y0, x1, y1 float64) *Pattern {
+func PatternCreateLinear(x0, y0, x1, y1 float32) *Pattern {
 	ret := wrapPattern(C.cairo_pattern_create_linear(C.double(x0), C.double(y0), C.double(x1), C.double(y1)))
 	if err := ret.status(); err != nil {
 		panic(err)
@@ -3035,7 +3035,7 @@ func PatternCreateLinear(x0, y0, x1, y1 float64) *Pattern {
 // See cairo_pattern_create_radial().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-pattern-create-radial
-func PatternCreateRadial(cx0, cy0, radius0, cx1, cy1, radius1 float64) *Pattern {
+func PatternCreateRadial(cx0, cy0, radius0, cx1, cy1, radius1 float32) *Pattern {
 	ret := wrapPattern(C.cairo_pattern_create_radial(C.double(cx0), C.double(cy0), C.double(radius0), C.double(cx1), C.double(cy1), C.double(radius1)))
 	if err := ret.status(); err != nil {
 		panic(err)
@@ -3110,7 +3110,7 @@ func (pattern *Pattern) GetType() PatternType {
 // See cairo_pattern_add_color_stop_rgb().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-pattern-add-color-stop-rgb
-func (pattern *Pattern) AddColorStopRGB(offset, red, green, blue float64) {
+func (pattern *Pattern) AddColorStopRGB(offset, red, green, blue float32) {
 	C.cairo_pattern_add_color_stop_rgb(pattern.Ptr, C.double(offset), C.double(red), C.double(green), C.double(blue))
 	if err := pattern.status(); err != nil {
 		panic(err)
@@ -3120,7 +3120,7 @@ func (pattern *Pattern) AddColorStopRGB(offset, red, green, blue float64) {
 // See cairo_pattern_add_color_stop_rgba().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-pattern-add-color-stop-rgba
-func (pattern *Pattern) AddColorStopRGBA(offset, red, green, blue, alpha float64) {
+func (pattern *Pattern) AddColorStopRGBA(offset, red, green, blue, alpha float32) {
 	C.cairo_pattern_add_color_stop_rgba(pattern.Ptr, C.double(offset), C.double(red), C.double(green), C.double(blue), C.double(alpha))
 	if err := pattern.status(); err != nil {
 		panic(err)
@@ -3150,7 +3150,7 @@ func (pattern *MeshPattern) EndPatch() {
 // See cairo_mesh_pattern_curve_to().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-mesh-pattern-curve-to
-func (pattern *MeshPattern) CurveTo(x1, y1, x2, y2, x3, y3 float64) {
+func (pattern *MeshPattern) CurveTo(x1, y1, x2, y2, x3, y3 float32) {
 	C.cairo_mesh_pattern_curve_to(pattern.Ptr, C.double(x1), C.double(y1), C.double(x2), C.double(y2), C.double(x3), C.double(y3))
 	if err := pattern.status(); err != nil {
 		panic(err)
@@ -3160,7 +3160,7 @@ func (pattern *MeshPattern) CurveTo(x1, y1, x2, y2, x3, y3 float64) {
 // See cairo_mesh_pattern_line_to().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-mesh-pattern-line-to
-func (pattern *MeshPattern) LineTo(x, y float64) {
+func (pattern *MeshPattern) LineTo(x, y float32) {
 	C.cairo_mesh_pattern_line_to(pattern.Ptr, C.double(x), C.double(y))
 	if err := pattern.status(); err != nil {
 		panic(err)
@@ -3170,7 +3170,7 @@ func (pattern *MeshPattern) LineTo(x, y float64) {
 // See cairo_mesh_pattern_move_to().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-mesh-pattern-move-to
-func (pattern *MeshPattern) MoveTo(x, y float64) {
+func (pattern *MeshPattern) MoveTo(x, y float32) {
 	C.cairo_mesh_pattern_move_to(pattern.Ptr, C.double(x), C.double(y))
 	if err := pattern.status(); err != nil {
 		panic(err)
@@ -3180,7 +3180,7 @@ func (pattern *MeshPattern) MoveTo(x, y float64) {
 // See cairo_mesh_pattern_set_control_point().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-mesh-pattern-set-control-point
-func (pattern *MeshPattern) SetControlPoint(pointNum int, x, y float64) {
+func (pattern *MeshPattern) SetControlPoint(pointNum int, x, y float32) {
 	C.cairo_mesh_pattern_set_control_point(pattern.Ptr, C.uint(pointNum), C.double(x), C.double(y))
 	if err := pattern.status(); err != nil {
 		panic(err)
@@ -3190,7 +3190,7 @@ func (pattern *MeshPattern) SetControlPoint(pointNum int, x, y float64) {
 // See cairo_mesh_pattern_set_corner_color_rgb().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-mesh-pattern-set-corner-color-rgb
-func (pattern *MeshPattern) SetCornerColorRGB(cornerNum int, red, green, blue float64) {
+func (pattern *MeshPattern) SetCornerColorRGB(cornerNum int, red, green, blue float32) {
 	C.cairo_mesh_pattern_set_corner_color_rgb(pattern.Ptr, C.uint(cornerNum), C.double(red), C.double(green), C.double(blue))
 	if err := pattern.status(); err != nil {
 		panic(err)
@@ -3200,7 +3200,7 @@ func (pattern *MeshPattern) SetCornerColorRGB(cornerNum int, red, green, blue fl
 // See cairo_mesh_pattern_set_corner_color_rgba().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-mesh-pattern-set-corner-color-rgba
-func (pattern *MeshPattern) SetCornerColorRGBA(cornerNum int, red, green, blue, alpha float64) {
+func (pattern *MeshPattern) SetCornerColorRGBA(cornerNum int, red, green, blue, alpha float32) {
 	C.cairo_mesh_pattern_set_corner_color_rgba(pattern.Ptr, C.uint(cornerNum), C.double(red), C.double(green), C.double(blue), C.double(alpha))
 	if err := pattern.status(); err != nil {
 		panic(err)
@@ -3352,42 +3352,42 @@ func (matrix *Matrix) InitIdentity() {
 // See cairo_matrix_init_translate().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-matrix-t.html#cairo-matrix-init-translate
-func (matrix *Matrix) InitTranslate(tx, ty float64) {
+func (matrix *Matrix) InitTranslate(tx, ty float32) {
 	C.cairo_matrix_init_translate((*C.cairo_matrix_t)(unsafe.Pointer(matrix)), C.double(tx), C.double(ty))
 }
 
 // See cairo_matrix_init_scale().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-matrix-t.html#cairo-matrix-init-scale
-func (matrix *Matrix) InitScale(sx, sy float64) {
+func (matrix *Matrix) InitScale(sx, sy float32) {
 	C.cairo_matrix_init_scale((*C.cairo_matrix_t)(unsafe.Pointer(matrix)), C.double(sx), C.double(sy))
 }
 
 // See cairo_matrix_init_rotate().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-matrix-t.html#cairo-matrix-init-rotate
-func (matrix *Matrix) InitRotate(radians float64) {
+func (matrix *Matrix) InitRotate(radians float32) {
 	C.cairo_matrix_init_rotate((*C.cairo_matrix_t)(unsafe.Pointer(matrix)), C.double(radians))
 }
 
 // See cairo_matrix_translate().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-matrix-t.html#cairo-matrix-translate
-func (matrix *Matrix) Translate(tx, ty float64) {
+func (matrix *Matrix) Translate(tx, ty float32) {
 	C.cairo_matrix_translate((*C.cairo_matrix_t)(unsafe.Pointer(matrix)), C.double(tx), C.double(ty))
 }
 
 // See cairo_matrix_scale().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-matrix-t.html#cairo-matrix-scale
-func (matrix *Matrix) Scale(sx, sy float64) {
+func (matrix *Matrix) Scale(sx, sy float32) {
 	C.cairo_matrix_scale((*C.cairo_matrix_t)(unsafe.Pointer(matrix)), C.double(sx), C.double(sy))
 }
 
 // See cairo_matrix_rotate().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-matrix-t.html#cairo-matrix-rotate
-func (matrix *Matrix) Rotate(radians float64) {
+func (matrix *Matrix) Rotate(radians float32) {
 	C.cairo_matrix_rotate((*C.cairo_matrix_t)(unsafe.Pointer(matrix)), C.double(radians))
 }
 
@@ -3409,14 +3409,14 @@ func (result *Matrix) Multiply(a, b *Matrix) {
 // See cairo_matrix_transform_distance().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-matrix-t.html#cairo-matrix-transform-distance
-func (matrix *Matrix) TransformDistance(dx, dy *float64) {
+func (matrix *Matrix) TransformDistance(dx, dy *float32) {
 	C.cairo_matrix_transform_distance((*C.cairo_matrix_t)(unsafe.Pointer(matrix)), (*C.double)(unsafe.Pointer(dx)), (*C.double)(unsafe.Pointer(dy)))
 }
 
 // See cairo_matrix_transform_point().
 //
 // C API documentation: http://cairographics.org/manual/cairo-cairo-matrix-t.html#cairo-matrix-transform-point
-func (matrix *Matrix) TransformPoint(x, y *float64) {
+func (matrix *Matrix) TransformPoint(x, y *float32) {
 	C.cairo_matrix_transform_point((*C.cairo_matrix_t)(unsafe.Pointer(matrix)), (*C.double)(unsafe.Pointer(x)), (*C.double)(unsafe.Pointer(y)))
 }
 
@@ -3624,7 +3624,7 @@ func (i SVGVersion) String() string {
 // See cairo_svg_surface_create().
 //
 // C API documentation: http://cairographics.org/manual/cairo-SVG-Surfaces.html#cairo-svg-surface-create
-func SVGSurfaceCreate(filename string, widthInPoints, heightInPoints float64) *SVGSurface {
+func SVGSurfaceCreate(filename string, widthInPoints, heightInPoints float32) *SVGSurface {
 	c_filename := C.CString(filename)
 	defer C.free(unsafe.Pointer(c_filename))
 	ret := &SVGSurface{wrapSurface(C.cairo_svg_surface_create(c_filename, C.double(widthInPoints), C.double(heightInPoints)))}
